@@ -35,7 +35,7 @@ export default function (opt) {
 
     app.use(async (ctx, next) => {
         const authHeader = ctx.headers['x-custom-auth'];
-        if (authHeader !== 'your-secret-key') {
+        if (authHeader !== 'bananinha-azul-e-verde-digisat') {
             ctx.status = 401;
             ctx.body = 'Authentication required.';
             return;
