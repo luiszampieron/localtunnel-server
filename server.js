@@ -32,6 +32,16 @@ export default function (opt) {
     const schema = opt.secure ? 'https' : 'http';
 
     const app = new Koa();
+
+    app.use(async (ctx, next) => {
+        const authHeader = ctx.headers['x-custom-auth'];
+        if (authHeader !== 'your-secret-key') {
+            ctx.status = 401;
+            ctx.body = 'Authentication required.';
+            return;
+        }
+        await next();
+    });
     
     // root endpoint
     app.use(async (ctx, next) => {
