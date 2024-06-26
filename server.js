@@ -3,9 +3,7 @@ import Koa from 'koa';
 import tldjs from 'tldjs';
 import Debug from 'debug';
 import http from 'http';
-import { hri } from 'human-readable-ids';
 import humanId from 'human-id';
-import Router from 'koa-router';
 
 import ClientManager from './lib/ClientManager.js';
 
@@ -22,10 +20,9 @@ export default function (opt) {
 
     const validHosts = opt.domain ? [opt.domain] : undefined;
     const myTldjs = tldjs.fromUserSettings({ validHosts });
-    const landingPage = opt.landing || 'https://localtunnel.github.io/www/';
+    const landingPage = opt.landing || 'https://digisat.com.br/';
 
     function GetClientIdFromHostname(hostname) {
-        // from pull request: https://github.com/localtunnel/server/pull/118
         const hostnameAndPort = hostname.split(':');
         return myTldjs.getSubdomain(hostnameAndPort[0]);
     }
@@ -35,33 +32,7 @@ export default function (opt) {
     const schema = opt.secure ? 'https' : 'http';
 
     const app = new Koa();
-    const router = new Router();
-
-    router.get('/api/status', async (ctx, next) => {
-        const stats = manager.stats;
-        ctx.body = {
-            tunnels: stats.tunnels,
-            mem: process.memoryUsage(),
-        };
-    });
-
-    router.get('/api/tunnels/:id/status', async (ctx, next) => {
-        const clientId = ctx.params.id;
-        const client = manager.getClient(clientId);
-        if (!client) {
-            ctx.throw(404);
-            return;
-        }
-
-        const stats = client.stats();
-        ctx.body = {
-            connected_sockets: stats.connectedSockets,
-        };
-    });
-
-    app.use(router.routes());
-    app.use(router.allowedMethods());
-
+    
     // root endpoint
     app.use(async (ctx, next) => {
         const path = ctx.request.path;
