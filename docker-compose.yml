@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - server_12220
+      - server_12221
+      - server_12222
+      - server_12223
+      - server_12224
+      - server_12225
+      - server_12226
+      - server_12227
+      - server_12228
+      - server_12229
+      - server_12230
+
+  server_12220:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12220
+    ports:
+      - "12220:12220"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12220", "--domain", "tunel.pedirlink.com"]
+
+  server_12221:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12221
+    ports:
+      - "12221:12221"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12221", "--domain", "tunel.pedirlink.com"]
+
+  server_12222:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12222
+    ports:
+      - "12222:12222"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12222", "--domain", "tunel.pedirlink.com"]
+
+  server_12223:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12223
+    ports:
+      - "12223:12223"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12223", "--domain", "tunel.pedirlink.com"]
+
+  server_12224:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12224
+    ports:
+      - "12224:12224"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12224", "--domain", "tunel.pedirlink.com"]
+
+  server_12225:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12225
+    ports:
+      - "12225:12225"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12225", "--domain", "tunel.pedirlink.com"]
+
+  server_12226:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12226
+    ports:
+      - "12226:12226"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12226", "--domain", "tunel.pedirlink.com"]
+
+  server_12227:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12227
+    ports:
+      - "12227:12227"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12227", "--domain", "tunel.pedirlink.com"]
+
+  server_12228:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12228
+    ports:
+      - "12228:12228"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12228", "--domain", "tunel.pedirlink.com"]
+
+  server_12229:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12229
+    ports:
+      - "12229:12229"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12229", "--domain", "tunel.pedirlink.com"]
+
+  server_12230:
+    image: fernandoluisbernardi/tunnel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server_12230
+    ports:
+      - "12230:12230"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "-r", "esm", "./bin/server", "--port", "12230", "--domain", "tunel.pedirlink.com"]
