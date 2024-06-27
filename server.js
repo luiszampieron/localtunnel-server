@@ -33,7 +33,6 @@ export default function (opt) {
 
     const app = new Koa();
 
-    /*
     app.use(async (ctx, next) => {
         const authHeader = ctx.headers['x-custom-auth'];
         if (authHeader !== 'bananinha-azul-e-verde-digisat') {
@@ -43,7 +42,6 @@ export default function (opt) {
         }
         await next();
     });
-    */
     
     // root endpoint
     app.use(async (ctx, next) => {
