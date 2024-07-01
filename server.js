@@ -161,6 +161,10 @@ export default function (opt) {
     });
 
     server.on('upgrade', (req, socket, head) => {
+        console.log("------------------")
+        console.log("UPGRADE, QQ é isso???", req.headers.host, req.headers)
+        console.log("------------------")
+ 
         const hostname = req.headers.host;
         if (!hostname) {
             socket.destroy();
@@ -184,5 +188,3 @@ export default function (opt) {
 
     return server;
 }
-
-console.log("INIT SERVER")
