@@ -35,10 +35,6 @@ export default function (opt) {
 
     // root endpoint
     app.use(async (ctx, next) => {
-        console.log("-----------------------")
-        console.log('root', ctx.request.path)
-        console.log("-----------------------")
-
         const path = ctx.request.path;
         const endpointIp = getEndpointIps(ctx.request);
 
@@ -84,12 +80,6 @@ export default function (opt) {
         const parts = ctx.request.path.split('/');
         const endpointIp = getEndpointIps(ctx.request);
 
-
-        console.log("-----------------------")
-        console.log('root', endpointIp)
-        console.log("-----------------------")
-
-
         // any request with several layers of paths is not allowed
         // rejects /foo/bar
         // allow /foo
@@ -132,8 +122,6 @@ export default function (opt) {
     const appCallback = app.callback();
 
     server.on('request', (req, res) => {
-        console.log("REQUEST", '----------------------')
-
         // without a hostname, we won't know who the request is for
         const hostname = req.headers.host;
         if (!hostname) {
@@ -143,7 +131,22 @@ export default function (opt) {
         }
 
         const clientId = GetClientIdFromHostname(hostname);
+
+        console.log("-------------------")
+        console.log("CLIENT ID", clientId)
+        console.log("HOSTNAME", hostname)
+        console.log("HEADERS", req.headers)
+        console.log("-------------------")
+
         if (!clientId) {
+            const token = req.headers['x-access-token'];
+
+            if (token != opt.token) {
+                res.statusCode = 403;
+                res.end(`Token incorrect: ${token}`);
+                return;
+            }
+
             appCallback(req, res);
             return;
         }
@@ -159,10 +162,6 @@ export default function (opt) {
     });
 
     server.on('upgrade', (req, socket, head) => {
-        console.log("------------------")
-        console.log("UPGRADE, QQ é isso???", req.headers.host, req.headers)
-        console.log("------------------")
- 
         const hostname = req.headers.host;
         if (!hostname) {
             socket.destroy();
