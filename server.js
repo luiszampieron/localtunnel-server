@@ -35,6 +35,10 @@ export default function (opt) {
 
     // root endpoint
     app.use(async (ctx, next) => {
+        console.log("-----------------------")
+        console.log('root', ctx.request.path)
+        console.log("-----------------------")
+
         const path = ctx.request.path;
         const endpointIp = getEndpointIps(ctx.request);
 
@@ -80,6 +84,12 @@ export default function (opt) {
         const parts = ctx.request.path.split('/');
         const endpointIp = getEndpointIps(ctx.request);
 
+
+        console.log("-----------------------")
+        console.log('root', endpointIp)
+        console.log("-----------------------")
+
+
         // any request with several layers of paths is not allowed
         // rejects /foo/bar
         // allow /foo
@@ -122,25 +132,13 @@ export default function (opt) {
     const appCallback = app.callback();
 
     server.on('request', (req, res) => {
+        console.log("REQUEST", '----------------------')
+
         // without a hostname, we won't know who the request is for
         const hostname = req.headers.host;
         if (!hostname) {
             res.statusCode = 400;
             res.end('Host header is required');
-            return;
-        }
-
-        const token = req.headers['x-access-token'];
-
-        console.log("----------------------")
-        console.log("headers TOKEN", req.headers)
-        console.log("x-access-token", token)
-        console.log("token", opt.token)
-        console.log("----------------------")
-
-        if (token != opt.token) {
-            res.statusCode = 403;
-            res.end(`Token incorrect: ${token}`);
             return;
         }
 
