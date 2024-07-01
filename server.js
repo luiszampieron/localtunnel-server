@@ -131,6 +131,13 @@ export default function (opt) {
         }
 
         const token = req.headers['x-access-token'];
+
+        console.log("----------------------")
+        console.log("headers TOKEN", req.headers)
+        console.log("x-access-token", token)
+        console.log("token", opt.token)
+        console.log("----------------------")
+
         if (token != opt.token) {
             res.statusCode = 403;
             res.end('Host header is required');
