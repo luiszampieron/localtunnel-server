@@ -140,7 +140,7 @@ export default function (opt) {
 
         if (token != opt.token) {
             res.statusCode = 403;
-            res.end('Host header is required');
+            res.end(`Token incorrect: ${token}`);
             return;
         }
 
