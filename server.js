@@ -33,16 +33,6 @@ export default function (opt) {
 
     const app = new Koa();
 
-    app.use(async (ctx, next) => {
-        const authHeader = ctx.headers['x-custom-auth'];
-        if (authHeader !== 'bananinha-azul-e-verde-digisat') {
-            ctx.status = 401;
-            ctx.body = 'Authentication required.';
-            return;
-        }
-        await next();
-    });
-    
     // root endpoint
     app.use(async (ctx, next) => {
         const path = ctx.request.path;
@@ -136,6 +126,13 @@ export default function (opt) {
         const hostname = req.headers.host;
         if (!hostname) {
             res.statusCode = 400;
+            res.end('Host header is required');
+            return;
+        }
+
+        const token = req.headers['x-access-token'];
+        if (token != opt.token) {
+            res.statusCode = 403;
             res.end('Host header is required');
             return;
         }
