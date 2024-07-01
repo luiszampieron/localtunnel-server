@@ -16,6 +16,7 @@ const argv = optimist
         default: false,
         describe: 'use this flag to indicate proxy over https'
     })
+    
     .options('port', {
         default: '80',
         describe: 'listen on this port for outside requests'
@@ -28,12 +29,15 @@ const argv = optimist
         describe:
             'Specify the base domain name. This is optional if hosting localtunnel from a regular example.com domain. This is required if hosting a localtunnel server from a subdomain (i.e. lt.example.com where clients will be client-app.lt.example.com)'
     })
+    .options('token', {
+        describe: 'Specify the auth token'
+    })
     .options('landing', {
         describe:
             "Specify the landing page url where users will be redirected to when browsing to the server's domain. This is optional."
     })
     .options('max-sockets', {
-        default: 10,
+        default: 1000,
         describe:
             'maximum number of tcp sockets each client is allowed to establish at one time (the tunnels)'
     }).argv;
@@ -47,7 +51,8 @@ const server = CreateServer({
     max_tcp_sockets: argv['max-sockets'],
     secure: argv.secure,
     domain: argv.domain,
-    landing: argv.landing
+    landing: argv.landing,
+    token: argv.token,
 });
 
 server.listen(argv.port, argv.address, () => {
