@@ -132,16 +132,8 @@ export default function (opt) {
 
         const clientId = GetClientIdFromHostname(hostname);
 
-        console.log("-------------------")
-        console.log("CLIENT ID", clientId)
-        console.log("HOSTNAME", hostname)
-        console.log("HEADERS", req.headers)
-        console.log("-------------------")
-
         if (!clientId) {
-            const token = req.headers['x-access-token'];
-
-            if (token != opt.token) {
+            if (req.headers['x-access-token'] != opt.token) {
                 res.statusCode = 403;
                 res.end(`Token incorrect: ${token}`);
                 return;
